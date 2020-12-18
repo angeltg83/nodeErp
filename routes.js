@@ -41,9 +41,9 @@ rutasProtegidas.use((req, res, next) => {
 
 app.get("/prueba", rutasProtegidas, UsuarioController.prueba);
 app.get("/get", rutasProtegidas, UsuarioController.get);
-app.get("/auth", AuthController.getAuth);
+app.post("/auth", AuthController.getAuth);
 
-app.get("/excersices", cors(), ExerciseController.exercises);
-app.post("/excersiceNew",cors(),ExerciseController.excersiceNew);
+// app.get("/excersices", cors(), ExerciseController.exercises);
+// app.post("/excersiceNew",cors(),ExerciseController.excersiceNew);
 
 module.exports = app;

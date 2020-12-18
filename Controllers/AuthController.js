@@ -7,34 +7,32 @@ app.set("key", config.key);
 
 const connection = require("../config/datastore");
 
-
+/**
+ * @author Angel Tigua
+ * @param {json} username,contrasena
+ * @description verifica contra la base de dato si un usuario es valido, luego se emite un jwt
+ * @since 2020.12.18
+ * @returns {json} token
+ */
 getAuth = async (req, res) => {
-  // console.log("eq.body",req)
-
   const db = await connection();
-  
-  let {username,contrasena} = req.body;
-
+  // console.log("req --- ", req);
+  const { username, contrasena } = req.body;
   const persona = await db
-  .collection("persona")
-  .find({'users.username': username,'users.password':contrasena})
-  .toArray();
+    .collection("persona")
+    .find({ "user.username": username, "user.password": contrasena })
+    .toArray();
 
-  console.log("persona ",persona)
-  let users = persona[0].users;
-  for (const i of users) {
-    
-  }
+  console.log("persona find ", persona);
+  const { user } = persona[0];
 
-  if (req.body.username === "angel.tigua83@gmail.com" && req.body.contrasena === "12345") {
-  
-   
+  if (username === user.username && contrasena === user.password) {
     // console.log("ENTRO!!");
     const payload = {
       check: true,
     };
     const token = jwt.sign(payload, app.get("key"), {
-      expiresIn: '24d',
+      expiresIn: "24d",
     });
     res.json({
       status: true,
