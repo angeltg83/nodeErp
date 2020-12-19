@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 
 const UsuarioController = require("./Controllers/UsuarioController");
 const AuthController = require("./Controllers/AuthController");
-// const ExerciseController = require("./Controllers/ExerciseController");
 
 // app.options('*', cors())
 app.use((req, res, next) => {
@@ -28,7 +27,7 @@ app.use(express.Router());
 const rutasProtegidas = express.Router();
 rutasProtegidas.use((req, res, next) => {
   const token = req.headers["access-token"];
-  console.log("TOKEN ", token);
+  console.log("jwt ", token);
   if (token) {
     jwt.verify(token, app.get("key"), (err, decoded) => {
       if (err) {
@@ -45,11 +44,7 @@ rutasProtegidas.use((req, res, next) => {
   }
 });
 
-app.get("/prueba", rutasProtegidas, UsuarioController.prueba);
-app.get("/get", rutasProtegidas, UsuarioController.get);
-app.post("/auth", AuthController.getAuth);
 
-// app.get("/excersices", cors(), ExerciseController.exercises);
-// app.post("/excersiceNew",cors(),ExerciseController.excersiceNew);
+app.post("/auth", AuthController.getAuth);
 
 module.exports = app;
