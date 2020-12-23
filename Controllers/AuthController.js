@@ -28,7 +28,7 @@ getAuth = async (req, res) => {
 
     const match = await bcrypt.compare(contrasena, persona[0].user.password);
     if (!match) {
-      throw new Error({ err: "Usuario o clave no registrada" });
+      throw ("Usuario o clave no registrada");
     } else {
       const token = jwt.sign(
         {
@@ -46,7 +46,7 @@ getAuth = async (req, res) => {
       });
     }
   } catch (err) {
-    // console.log("err 00 ",err)
+    console.log("err 00 ", err);
     res.status(500).send({ err, token: null });
   }
 
